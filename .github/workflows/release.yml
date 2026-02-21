@@ -63,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "YourApp ${{ github.ref_name }}"
+          releaseName: "DigitalServo CAN Controller ${{ github.ref_name }}"
           releaseBody: |
             ## 変更点
             - 詳細はコミットログを参照してください。
