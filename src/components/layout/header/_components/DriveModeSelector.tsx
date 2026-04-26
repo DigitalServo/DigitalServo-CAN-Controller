@@ -13,8 +13,6 @@ import PublishIcon from '@mui/icons-material/Publish';
 import { invoke } from "@tauri-apps/api/core";
 import { useCanConnectionStore } from "@/stores/canConnection";
 
-
-
 const TinyTextField: StyledComponent<TextFieldProps> = styled(TextField)({
   '& .MuiInputBase-root': {
     height: 28,
@@ -53,7 +51,7 @@ export default function DriveModeSelector () {
   const { nodeId } = useNodeIdStore();
   const { connected } = useCanConnectionStore();
 
-  async function getdriveModeFromDriver() {
+  async function getDriveModeFromDriver() {
     if (nodeId == null) {
       enqueueSnackbar("Node ID Not Set", { variant: "error" });
       return;
@@ -125,7 +123,7 @@ export default function DriveModeSelector () {
       </Tooltip>
 
       <Tooltip title={"Check control mode"} placement="bottom">
-        <IconButton onClick={getdriveModeFromDriver} disableRipple disableFocusRipple disableTouchRipple sx={{pl: 0.5}}>
+        <IconButton onClick={getDriveModeFromDriver} disableRipple disableFocusRipple disableTouchRipple sx={{pl: 0.5}}>
           <Avatar sx={{bgcolor: isGetActive? "#0082FC" : "#ccc", width: 28, height: 28, transition: 'background-color 0.6s ease'}}>
             <PublishIcon fontSize="small" sx={{ color: isGetActive? "#fff" : "#aaa", transition: 'color 0.6s ease' }} />
           </Avatar>

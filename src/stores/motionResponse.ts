@@ -19,13 +19,23 @@ interface MotionResponseStore {
   clearMotionResponse: () => void;
 }
 
-export const useMotionResponseStore = create<MotionResponseStore>((set) => ({
+export const useMotionResponseStore = create<MotionResponseStore>((set, get) => ({
   motionResponse: null,
 
-  setMotionResponse: (payload) =>
+  setMotionResponse: (payload) => {
+    const LPF_GAIN: number = 0.8;
+    const prevResponse = get().motionResponse;
+    const newResponse = prevResponse != null? {
+      position: (1.0 - LPF_GAIN) * prevResponse.position + LPF_GAIN * payload.position,
+      velocity: (1.0 - LPF_GAIN) * prevResponse.velocity + LPF_GAIN * payload.velocity,
+      force: (1.0 - LPF_GAIN) * prevResponse.force + LPF_GAIN * payload.force,
+        disturbance: (1.0 - LPF_GAIN) * prevResponse.disturbance + LPF_GAIN * payload.disturbance,
+    } : payload;
+
     set((_) => ({
-      motionResponse: payload,
-    })),
+      motionResponse: newResponse,
+    }))
+  },
 
   clearMotionResponse: () => set({ motionResponse: null}),
 }));
